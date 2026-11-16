@@ -1,0 +1,32 @@
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+        directions = [[-1,0],[1,0],[0,-1],[0,1]]
+        islands = 0
+        def bfs(r,c):
+            q = deque()
+            grid[r][c] = "0"
+            q.append((r,c))
+
+            while q:
+                row, col = q.popleft()
+                for di,dj in directions:
+                    ni,nj = row+di,col+dj
+                    if (ni < 0 or nj < 0 or ni >= rows or
+                        nj >= cols or grid[ni][nj] == "0"
+                    ):
+                        continue
+                    q.append((ni,nj))
+                    grid[ni][nj] = "0"
+
+
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j] == "1":
+                    bfs(i,j)
+                    islands += 1
+        
+        return islands
+
+
